@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "_head.html" %}
+</html>
+<body>
+    <!--Website title-->
+    <h1><a href="/">{{ metadata.title }}</a></h1>
+    <!--Navigation bar-->
+    {% include "_nav.html" %}
+    <!--Pages excluded from collections, i.e. "index" pages, do not need their own metadata d isplayed-->
+    {% if eleventyExcludeFromCollections %}
+        {{ content }}
+    {% else %}
+        <!--Otherwise, display metadata-->
+        <div class="content">
+            <h2>{{ title }}</h2>
+            <div>
+                <small>{{ date_str }}</small><br>
+                {% if collaborators %}
+                    <small>
+                    {% for collaborator in collaborators %}
+                        {{ collaborator }}<br>
+                    {% endfor %}
+                    </small>
+                {% endif %}
+            </div>
+            {% if image %}
+                <img src="{{ image }}" alt="{{ alt }}">
+            {% endif %}
+            {% if links %}
+                <p>
+                    {% for link in links %}
+                        <img src="{{ link.image }}" class="textsize-image">
+                        <a href="{{ link.url }}">{{ link.name }}</a>&nbsp;
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {{ content }}
+        </div>
+    {% endif %}
+    <!--footer-->
+    {% include "_foot.html" %}
+</body>
